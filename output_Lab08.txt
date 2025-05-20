@@ -1,2 +1,12 @@
-Case-1: 10 0 25 1
-Case-2: 17 1 72 1
+Case-1:
+  Sum of 5 and 5 is 10
+  Difference of 5 and 5 is 0
+  Product of 5 and 5 is 25
+  Division of 5 by 5 is 1
+
+Case-2:
+  Sum of 9 and 8 is 17
+  Difference of 9 and 8 is 1
+  Product of 9 and 8 is 72
+  Division of 9 by 8 is 1
+
