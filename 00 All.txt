@@ -1,0 +1,397 @@
+-------------------------------01 C Programming-------------------------------------------------
+#include <stdio.h>
+
+int main() {
+    int num1, num2, result;
+    char operator;
+
+    printf("Enter expression (e.g., 1+2): ");
+    scanf("%d%c%d", &num1, &operator, &num2);
+
+    switch (operator) {
+        case '+':
+            result = num1 + num2;
+            printf("%d+%d=%d\n", num1, num2, result);
+            break;
+        case '-':
+            result = num1 - num2;
+            printf("%d-%d=%d\n", num1, num2, result);
+            break;
+        case '*':
+            result = num1 * num2;
+            printf("%d*%d=%d\n", num1, num2, result);
+            break;
+        case '/':
+            if (num2 != 0) {
+                result = num1 / num2;
+                printf("%d/%d=%d\n", num1, num2, result);
+            } else {
+                printf("Division by zero is not allowed.\n");
+            }
+            break;
+        case '%':
+            if (num2 != 0) {
+                result = num1 % num2;
+                printf("%d%%%d=%d\n", num1, num2, result); // %% to print %
+            } else {
+                printf("Modulo by zero is not allowed.\n");
+            }
+            break;
+        default:
+            printf("Invalid operator.\n");
+    }
+
+    return 0;
+}
+
+
+---------------------------------------------2 C programming-----------------------------------------------------
+#include <stdio.h>
+
+int main() {
+    int numbers[100], count = 0;
+    char input[1000];
+    char op;
+
+    printf("Enter even number of integers followed by an operator (e.g., 4 5 7 8 +):\n");
+
+    // Read whole line of input
+    fgets(input, sizeof(input), stdin);
+
+    // Scan integers and the operator
+    int i = 0, offset = 0;
+    while (sscanf(input + offset, "%d%n", &numbers[count], &i) == 1) {
+        count++;
+        offset += i;
+    }
+
+    // Scan operator after all numbers
+    sscanf(input + offset, " %c", &op);
+
+    if (count % 2 != 0) {
+        printf("Please enter an even number of integers.\n");
+        return 1;
+    }
+
+    printf("Output:\n");
+    int j =0;
+    for (j; j < count; j += 2) {
+        int a = numbers[j];
+        int b = numbers[j + 1];
+        switch (op) {
+            case '+': printf("%d ", a + b); break;
+            case '-': printf("%d ", a - b); break;
+            case '*': printf("%d ", a * b); break;
+            case '/': b != 0 ? printf("%d ", a / b) : printf("NaN "); break;
+            case '%': b != 0 ? printf("%d ", a % b) : printf("NaN "); break;
+            default: printf("Invalid operator\n"); return 1;
+        }
+    }
+
+    printf("\n");
+    return 0;
+}
+
+
+
+--------------------------------3 C Programming--------------------------------------------------------------------
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+int isPalindrome(char str[]) {
+    int start = 0;
+    int end = strlen(str) - 1;
+
+    while (start < end) {
+        if (str[start] != str[end])
+            return 0;  // Not a palindrome
+        start++;
+        end--;
+    }
+    return 1;  // It's a palindrome
+}
+
+int main() {
+    char input[100];
+
+    printf("Enter a string or number: ");
+    scanf("%s", input);
+
+    // Optional: convert to lowercase for case-insensitive comparison
+    for (int i = 0; input[i]; i++) {
+        input[i] = tolower(input[i]);
+    }
+
+    if (isPalindrome(input)) {
+        printf("'%s' is a palindrome.\n", input);
+    } else {
+        printf("'%s' is not a palindrome.\n", input);
+    }
+
+    return 0;
+}
+
+
+
+-----------------------------------------4 C Programming-----------------------------------------------------------
+#include <stdio.h>
+
+int main() {
+    int pin, enteredPin, choice;
+    float balance = 1000.0, deposit, withdraw;
+
+    pin = 5656; // default PIN
+
+    printf("Enter your 4-digit PIN: ");
+    scanf("%d", &enteredPin);
+
+    if (enteredPin != pin) {
+        printf("Incorrect PIN. Access Denied.\n");
+        return 0;
+    }
+
+    do {
+        printf("\n----- ATM MENU -----\n");
+        printf("1. Check Balance\n");
+        printf("2. Deposit Money\n");
+        printf("3. Withdraw Money\n");
+        printf("4. Exit\n");
+        printf("Enter your choice (1-4): ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                printf("Your current balance is: $%.2f\n", balance);
+                break;
+            case 2:
+                printf("Enter amount to deposit: ");
+                scanf("%f", &deposit);
+                if (deposit <= 0)
+                    printf("Invalid deposit amount.\n");
+                else {
+                    balance += deposit;
+                    printf("Deposited successfully.\n");
+                }
+                break;
+            case 3:
+                printf("Enter amount to withdraw: ");
+                scanf("%f", &withdraw);
+                if (withdraw <= 0 || withdraw > balance)
+                    printf("Invalid or insufficient funds.\n");
+                else {
+                    balance -= withdraw;
+                    printf("Withdrawal successful.\n");
+                }
+                break;
+            case 4:
+                printf("Thank you for using the ATM.\n");
+                break;
+            default:
+                printf("Invalid choice. Try again.\n");
+        }
+    } while (choice != 4);
+
+    return 0;
+}
+
+
+----------------------------------------------------5 C Programming------------------------------------------------------
+
+#include <stdio.h>
+
+// Function using for loop
+unsigned long long factorial_for(int n) {
+    unsigned long long fact = 1;
+    for (int i = 1; i <= n; i++) {
+        fact *= i;
+    }
+    return fact;
+}
+
+// Function using while loop
+unsigned long long factorial_while(int n) {
+    unsigned long long fact = 1;
+    int i = 1;
+    while (i <= n) {
+        fact *= i;
+        i++;
+    }
+    return fact;
+}
+
+int main() {
+    int number;
+    printf("Enter a non-negative integer: ");
+    scanf("%d", &number);
+
+    if (number < 0) {
+        printf("Factorial is not defined for negative numbers.\n");
+        return 0;
+    }
+
+    unsigned long long result_for = factorial_for(number);
+    unsigned long long result_while = factorial_while(number);
+
+    printf("Factorial using for loop: %llu\n", result_for);
+    printf("Factorial using while loop: %llu\n", result_while);
+
+    if (result_for == result_while)
+        printf("Results verified: Both methods give the same result.\n");
+    else
+        printf("Results mismatch! Please check the code.\n");
+
+    return 0;
+}
+
+----------------------------------------------6 C programming---------------------------------------------------------------
+
+#include <stdio.h>
+
+// Function to calculate sum
+int calculateSum(int arr[], int size) {
+    int sum = 0;
+    for (int i = 0; i < size; i++)
+        sum += arr[i];
+    return sum;
+}
+
+// Function to calculate average
+float calculateAverage(int sum, int size) {
+    return (float)sum / size;
+}
+
+int main() {
+    int arr[100], n, i = 0;
+
+    printf("Enter the number of elements (max 100): ");
+    scanf("%d", &n);
+
+    if (n <= 0 || n > 100) {
+        printf("Invalid array size.\n");
+        return 0;
+    }
+
+    printf("Enter %d integers:\n", n);
+    do {
+        scanf("%d", &arr[i]);
+        i++;
+    } while (i < n);
+
+    int sum = calculateSum(arr, n);
+    float avg = calculateAverage(sum, n);
+
+    printf("Sum = %d\n", sum);
+    printf("Average = %.2f\n", avg);
+
+    return 0;
+}
+
+
+----------------------------------------------------------07 C Programming-------------------------------------------
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    FILE *file;
+    char ch;
+
+    // --------- Simulate ClassNotFound by trying to open a non-existent file ---------
+    file = fopen("non_existing_class.txt", "r");
+    if (file == NULL) {
+        printf("ClassNotFound simulation: File 'non_existing_class.txt' not found.\n");
+    } else {
+        fclose(file);
+    }
+
+    // --------- EOFException Simulation ---------
+    file = fopen("input_Lab07.txt", "r");
+
+    if (file == NULL) {
+        printf("EOFException simulation: 'input.txt' file not found. Create this file to test EOF.\n");
+    } else {
+        printf("Reading characters until EOF:\n");
+
+        while ((ch = fgetc(file)) != EOF) {
+            putchar(ch);
+        }
+
+        printf("\nReached end of file (EOF).\n");
+        fclose(file);
+    }
+
+    return 0;
+}
+
+
+--------------------------------------------- 7 Java Programming------------------------------------------------------------------------
+
+import java.io.*;
+
+public class Lab_07 {
+    public static void main(String[] args) {
+        // ClassNotFound simulation
+        File file = new File("non_existing_class.txt");
+        if (!file.exists()) {
+            System.out.println("ClassNotFound simulation: File 'non_existing_class.txt' not found.");
+        }
+
+        // EOF simulation using BufferedReader
+        try (BufferedReader br = new BufferedReader(new FileReader("input_Lab07.txt"))) {
+            System.out.println("Reading characters until EOF:");
+            int ch;
+            while ((ch = br.read()) != -1) {
+                System.out.print((char) ch);
+            }
+            System.out.println("\nReached end of file (EOF).");
+        } catch (IOException e) {
+            System.out.println("IOException occurred: " + e.getMessage());
+        }
+    }
+}
+
+
+
+-------------------------------------------8 C Programming------------------------------------------------------------------
+
+#include <stdio.h>
+
+int main() {
+    FILE *fin, *fout;
+    int a, b, caseNo = 1;
+
+    // Open files
+    fin = fopen("input_Lab08.txt", "r");
+    fout = fopen("output_Lab08.txt", "w");
+
+    if (fin == NULL) {
+        printf("Error: Cannot open input_Lab08.txt\n");
+        return 1;
+    }
+
+    if (fout == NULL) {
+        printf("Error: Cannot create output_Lab08.txt\n");
+        fclose(fin);
+        return 1;
+    }
+
+    // Read pairs and write organized output
+    while (fscanf(fin, "%d %d", &a, &b) == 2) {
+        fprintf(fout, "Case-%d:\n", caseNo);
+        fprintf(fout, "  Sum of %d and %d is %d\n", a, b, a + b);
+        fprintf(fout, "  Difference of %d and %d is %d\n", a, b, a - b);
+        fprintf(fout, "  Product of %d and %d is %d\n", a, b, a * b);
+        if (b != 0)
+            fprintf(fout, "  Division of %d by %d is %d\n", a, b, a / b);
+        else
+            fprintf(fout, "  Division of %d by %d is undefined (division by zero)\n", a, b);
+        fprintf(fout, "\n");
+        caseNo++;
+    }
+
+    printf("Processing complete. Check output_Lab08.txt\n");
+
+    fclose(fin);
+    fclose(fout);
+    return 0;
+}
